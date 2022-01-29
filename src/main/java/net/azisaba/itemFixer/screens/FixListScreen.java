@@ -60,6 +60,7 @@ public class FixListScreen implements InventoryHolder, Listener {
     }
 
     public void refreshInventory(int page) {
+        inventory.clear();
         ItemStack blackGlassPane = Chain.of(new ItemStack(Material.BLACK_STAINED_GLASS_PANE)).apply(item ->
                 Chain.of(item.getItemMeta()).notNull().apply(meta -> {
                     meta.setDisplayName(" ");
@@ -136,8 +137,10 @@ public class FixListScreen implements InventoryHolder, Listener {
                 if (e.getClick() == ClickType.LEFT || e.getClick() == ClickType.SHIFT_LEFT) {
                     // reorder
                     if (selectedIndex == -1) {
-                        selectedIndex = absoluteIndex;
-                        refreshInventory(currentPage);
+                        if (e.getCurrentItem() != null && !e.getCurrentItem().getType().isAir()) {
+                            selectedIndex = absoluteIndex;
+                            refreshInventory(currentPage);
+                        }
                     } else {
                         if (selectedIndex == absoluteIndex) {
                             selectedIndex = -1;
@@ -165,7 +168,7 @@ public class FixListScreen implements InventoryHolder, Listener {
                     }
                 } else if (e.getClick() == ClickType.RIGHT || e.getClick() == ClickType.SHIFT_RIGHT) {
                     // remove
-                    Map.Entry<ItemStack, ItemStack> entry = items.get(e.getSlot());
+                    Map.Entry<ItemStack, ItemStack> entry = items.get(absoluteIndex);
                     if (plugin.getItems().remove(entry)) {
                         e.getWhoClicked().sendMessage(ChatColor.GREEN + "指定したFixを削除しました。");
                         plugin.save();

@@ -2,6 +2,7 @@ package net.azisaba.itemFixer;
 
 import net.azisaba.itemFixer.commands.FixItemsCommand;
 import net.azisaba.itemFixer.commands.ItemFixerCommand;
+import net.azisaba.itemFixer.listeners.FixItemsOnJoinListener;
 import net.azisaba.itemFixer.screens.RegisterFixScreen;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -31,6 +32,7 @@ public class ItemFixer extends JavaPlugin {
     public void onEnable() {
         reload();
         Bukkit.getPluginManager().registerEvents(new RegisterFixScreen(this), this);
+        Bukkit.getPluginManager().registerEvents(new FixItemsOnJoinListener(this), this);
         Objects.requireNonNull(Bukkit.getPluginCommand("fixitems")).setExecutor(new FixItemsCommand(this));
         Objects.requireNonNull(Bukkit.getPluginCommand("itemfixer")).setExecutor(new ItemFixerCommand(this));
     }
