@@ -163,6 +163,7 @@ public class ItemFixer extends JavaPlugin {
                 ItemStack newItem = entry.getValue().clone();
                 newItem.setAmount(item.getAmount());
                 inventory.setItem(i, newItem);
+                getLogger().info("Replaced item from " + item + " -> " + newItem);
                 count++;
             }
         }
