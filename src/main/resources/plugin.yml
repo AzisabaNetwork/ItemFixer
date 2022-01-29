@@ -1,0 +1,9 @@
+name: ItemFixer
+version: @VERSION@
+main: net.azisaba.itemFixer.ItemFixer
+api-version: 1.13
+commands:
+  itemfixer:
+    permission: itemfixer.command
+  fixitems:
+    permission: itemfixer.fixitems
