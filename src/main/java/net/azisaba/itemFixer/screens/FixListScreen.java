@@ -136,11 +136,10 @@ public class FixListScreen implements InventoryHolder, Listener {
                 int absoluteIndex = currentPage * 15 + relativeIndex;
                 if (e.getClick() == ClickType.LEFT || e.getClick() == ClickType.SHIFT_LEFT) {
                     // reorder
+                    if (e.getCurrentItem() == null || e.getCurrentItem().getType().isAir()) return;
                     if (selectedIndex == -1) {
-                        if (e.getCurrentItem() != null && !e.getCurrentItem().getType().isAir()) {
-                            selectedIndex = absoluteIndex;
-                            refreshInventory(currentPage);
-                        }
+                        selectedIndex = absoluteIndex;
+                        refreshInventory(currentPage);
                     } else {
                         if (selectedIndex == absoluteIndex) {
                             selectedIndex = -1;
