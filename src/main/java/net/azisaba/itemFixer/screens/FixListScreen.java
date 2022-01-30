@@ -181,12 +181,14 @@ public class FixListScreen implements InventoryHolder, Listener {
                 if (hasPrevPage(currentPage)) {
                     currentPage--;
                     initInventory(currentPage);
+                    e.getWhoClicked().openInventory(inventory);
                 }
             } else if (e.getSlot() == 53) {
                 // next page
                 if (hasNextPage(currentPage)) {
                     currentPage++;
                     initInventory(currentPage);
+                    e.getWhoClicked().openInventory(inventory);
                 }
             }
         }
