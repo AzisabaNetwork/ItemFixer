@@ -39,14 +39,11 @@ public class ItemFixer extends JavaPlugin {
 
     public void save() {
         List<Map<String, Object>> mapList = new ArrayList<>();
-        int idx = 0;
         for (Map.Entry<ItemStack, ItemStack> entry : new ArrayList<>(items)) {
-            if (items.indexOf(entry) != idx) continue; // avoid duplicates
             Map<String, Object> map = new HashMap<>();
             map.put("left", entry.getKey().serialize());
             map.put("right", entry.getValue().serialize());
             mapList.add(map);
-            idx++;
         }
         getConfig().set("items", mapList);
         try {
