@@ -30,8 +30,13 @@ public class ItemFixerCommand implements TabExecutor {
             return true;
         }
         if (args[0].equalsIgnoreCase("reload")) {
+            if (!sender.hasPermission("itemfixer.command.reload")) {
+                sender.sendMessage(ChatColor.RED + "このコマンドを実行する権限がありません。");
+                return true;
+            }
             plugin.reload();
             sender.sendMessage(ChatColor.GREEN + "設定を再読み込みしました。");
+            sender.sendMessage("" + ChatColor.GREEN + plugin.getItems().size() + "件のFixを読み込みました。");
         } else if (args[0].equalsIgnoreCase("register")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage(ChatColor.RED + "コンソールからは実行できません。");

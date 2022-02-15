@@ -41,11 +41,12 @@ public class ItemFixer extends JavaPlugin {
         List<Map<String, Object>> mapList = new ArrayList<>();
         for (Map.Entry<ItemStack, ItemStack> entry : new ArrayList<>(items)) {
             Map<String, Object> map = new HashMap<>();
-            map.put("left", entry.getKey().serialize());
-            map.put("right", entry.getValue().serialize());
+            map.put("left", entry.getKey());
+            map.put("right", entry.getValue());
             mapList.add(map);
         }
         getConfig().set("items", mapList);
+        getLogger().info("Saved " + mapList.size() + " entries.");
         try {
             if (!getDataFolder().exists()) {
                 //noinspection ResultOfMethodCallIgnored
@@ -74,11 +75,15 @@ public class ItemFixer extends JavaPlugin {
                 left = (ItemStack) ol;
             } else if (ol instanceof Map<?, ?>) {
                 left = ItemStack.deserialize((Map<String, Object>) ol);
+            } else {
+                getLogger().warning("Unreadable left item: " + ol + " (" + ol.getClass().getTypeName() + ")");
             }
             if (or instanceof ItemStack) {
                 right = (ItemStack) or;
             } else if (or instanceof Map<?, ?>) {
                 right = ItemStack.deserialize((Map<String, Object>) or);
+            } else {
+                getLogger().warning("Unreadable right item: " + or + " (" + or.getClass().getTypeName() + ")");
             }
             if (left != null && right != null) {
                 items.add(new AbstractMap.SimpleEntry<>(left, right));
