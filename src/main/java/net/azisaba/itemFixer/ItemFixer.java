@@ -141,13 +141,15 @@ public class ItemFixer extends JavaPlugin {
     }
 
     public void fixNow(Player player) {
+        getLogger().info("Checking " + player.getName());
         int count = 0;
         Inventory inventory = player.getInventory();
         Inventory enderChest = player.getEnderChest();
         for (Map.Entry<ItemStack, ItemStack> entry : items) {
-            count += fixItems(entry, inventory);
-            count += fixItems(entry, enderChest);
+            count += fixItems(player.getName() + " > Inventory", entry, inventory);
+            count += fixItems(player.getName() + " > EnderChest", entry, enderChest);
         }
+        getLogger().info("Checked " + player.getName() + " and fixed " + count + " items");
         player.sendMessage(ChatColor.LIGHT_PURPLE + "[ItemFixer] " + ChatColor.GREEN + count + "件のアイテムを修正しました。");
     }
 
@@ -157,7 +159,7 @@ public class ItemFixer extends JavaPlugin {
      * @param inventory the inventory
      * @return sum of fixed items
      */
-    private int fixItems(Map.Entry<ItemStack, ItemStack> entry, Inventory inventory) {
+    private int fixItems(String name, Map.Entry<ItemStack, ItemStack> entry, Inventory inventory) {
         int count = 0;
         for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack item = inventory.getItem(i);
@@ -165,7 +167,7 @@ public class ItemFixer extends JavaPlugin {
                 ItemStack newItem = entry.getValue().clone();
                 newItem.setAmount(item.getAmount());
                 inventory.setItem(i, newItem);
-                getLogger().info("Replaced item from " + item + " -> " + newItem);
+                getLogger().info("[" + name + "] Replaced item from " + item + " -> " + newItem);
                 count++;
             }
         }
