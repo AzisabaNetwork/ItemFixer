@@ -2,6 +2,7 @@ package net.azisaba.itemFixer;
 
 import net.azisaba.itemFixer.commands.FixItemsCommand;
 import net.azisaba.itemFixer.commands.ItemFixerCommand;
+import net.azisaba.itemFixer.listeners.FixItemOnClickListener;
 import net.azisaba.itemFixer.listeners.FixItemsOnJoinListener;
 import net.azisaba.itemFixer.screens.RegisterFixScreen;
 import org.bukkit.Bukkit;
@@ -33,6 +34,7 @@ public class ItemFixer extends JavaPlugin {
         reload();
         Bukkit.getPluginManager().registerEvents(new RegisterFixScreen(this), this);
         Bukkit.getPluginManager().registerEvents(new FixItemsOnJoinListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new FixItemOnClickListener(this), this);
         Objects.requireNonNull(Bukkit.getPluginCommand("fixitems")).setExecutor(new FixItemsCommand(this));
         Objects.requireNonNull(Bukkit.getPluginCommand("itemfixer")).setExecutor(new ItemFixerCommand(this));
     }
@@ -172,5 +174,18 @@ public class ItemFixer extends JavaPlugin {
             }
         }
         return count;
+    }
+
+    public ItemStack fixSingle(String name, ItemStack item) {
+        if (item == null) return null;
+        for (Map.Entry<ItemStack, ItemStack> entry : items) {
+            if (entry.getKey().isSimilar(item)) {
+                ItemStack newItem = entry.getValue().clone();
+                newItem.setAmount(item.getAmount());
+                getLogger().info("[" + name + "] Replaced item from " + item + " -> " + newItem);
+                return newItem;
+            }
+        }
+        return item;
     }
 }
