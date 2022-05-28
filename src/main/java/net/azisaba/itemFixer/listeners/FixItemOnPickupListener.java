@@ -21,10 +21,10 @@ public class FixItemOnPickupListener implements Listener {
     public void onPickup(EntityPickupItemEvent e) {
         Entity eveEntity = e.getEntity();
 
-        if(eveEntity.getType() != EntityType.PLAYER) {
+        if (eveEntity.getType() != EntityType.PLAYER) {
             return;
         }
-        if(eveEntity.hasPermission("itemfixer.exempt.fix_on_pickup")) {
+        if (eveEntity.hasPermission("itemfixer.exempt.fix_on_pickup")) {
             return;
         }
 
