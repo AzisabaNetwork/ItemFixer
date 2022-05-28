@@ -29,7 +29,7 @@ public class FixItemOnPickupListener implements Listener {
         }
 
         ItemStack item = e.getItem().getItemStack();
-        plugin.fixSingle(eveEntity.getName(), item);
+        plugin.fixSingle(eveEntity.getName() + " picked up an item", item);
 
     }
 }
