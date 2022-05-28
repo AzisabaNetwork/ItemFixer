@@ -3,6 +3,7 @@ package net.azisaba.itemFixer;
 import net.azisaba.itemFixer.commands.FixItemsCommand;
 import net.azisaba.itemFixer.commands.ItemFixerCommand;
 import net.azisaba.itemFixer.listeners.FixItemOnClickListener;
+import net.azisaba.itemFixer.listeners.FixItemOnPickupListener;
 import net.azisaba.itemFixer.listeners.FixItemsOnJoinListener;
 import net.azisaba.itemFixer.screens.RegisterFixScreen;
 import org.bukkit.Bukkit;
@@ -35,6 +36,7 @@ public class ItemFixer extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new RegisterFixScreen(this), this);
         Bukkit.getPluginManager().registerEvents(new FixItemsOnJoinListener(this), this);
         Bukkit.getPluginManager().registerEvents(new FixItemOnClickListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new FixItemOnPickupListener(this), this);
         Objects.requireNonNull(Bukkit.getPluginCommand("fixitems")).setExecutor(new FixItemsCommand(this));
         Objects.requireNonNull(Bukkit.getPluginCommand("itemfixer")).setExecutor(new ItemFixerCommand(this));
     }
